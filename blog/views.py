@@ -1,8 +1,13 @@
 from django.shortcuts import render
+from .models import BlogPost
 
 
 def show_all_posts(request):
-    return render(request, 'posts_list.html')
+    posts = BlogPost.objects.all()
+    context = {
+        'posts' : posts
+    }
+    return render(request, 'posts_list.html', context)
 
 def new_post(request):
     return render(request, 'new_post.html')
