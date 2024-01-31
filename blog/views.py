@@ -3,9 +3,9 @@ from .models import BlogPost
 
 
 def show_all_posts(request):
-    posts = BlogPost.objects.all()
+    posts = BlogPost.objects.filter(status="p").order_by("-datetime_modified")
     context = {
-        'posts' : posts
+        "posts" : posts
     }
     return render(request, 'posts_list.html', context)
 
