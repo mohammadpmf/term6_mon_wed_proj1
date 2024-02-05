@@ -12,9 +12,9 @@ All posts
         <h5 class="card-title">{{ post.title }}</h5>
         <h6 class="card-subtitle mb-2 text-muted small py-2">{{ post.datetime_created }}</h6>
         <p class="card-text py-3" style="text-align: justify;">
-            {{ post.text }}
+            {{ post.text|linebreaksbr|truncatechars:600|lower }}
         </p>
-        <a href="{% url "detail" 2 %}">
+        <a href="{% url "detail" post.id %}">
             <div class="btn btn-sm btn-outline-success">Read More</div>
         </a>
     </div>

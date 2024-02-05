@@ -4,15 +4,13 @@
 {% endblock title %}
 {% block content %}
 <div class="card shadow my-3 p-5">
-    <h1>Title</h1>
-    <p class="small text-muted mt-2">Created on: 16 Nov 2022</p>
-    <p class="mt-2" style="text-align: justify">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatibus dicta quibusdam soluta nesciunt, autem delectus numquam quas sint, corrupti sed facilis eveniet distinctio eligendi repudiandae esse et quo nulla. Hic.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti optio dicta quod quis voluptates atque eius eos laudantium, quaerat, minima veritatis in illum saepe cum fugit! Fugit, repudiandae animi. Provident.
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus qui cumque possimus id et quam? Magni consequatur sequi soluta eius aperiam, quos voluptatem a dolores atque enim numquam, est odio!
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, sit quis ea vero veniam blanditiis suscipit itaque quibusdam illo molestias nobis velit inventore error, rerum ipsa. Aliquid tempora voluptatum expedita!
+    <h1> {{ post.title }} </h1>
+    <p class="small text-muted mt-2">Created on: {{ post.datetime_created }}</p>
+    <p class="mt-2" style="text-align: justify">
+        {{ post.text }}
     </p>
-    <p class="small text-muted">Writer: poulstar teachers</p>
-    <p class="small text-muted mt">Last modified on: 16 Nov 2022</p>
+    <p class="small text-muted">Writer: {{ post.author }}</p>
+    <p class="small text-muted mt">Last modified on: {{ post.datetime_modified }}</p>
 </div>
 
 <div class="card shadow my-3 p-5">
