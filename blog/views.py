@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import BlogPost
+from .forms import BlogPostForm
 
 
 def show_all_posts(request):
@@ -10,7 +11,13 @@ def show_all_posts(request):
     return render(request, 'posts_list.html', context)
 
 def new_post(request):
-    return render(request, 'new_post.html')
+    form = BlogPostForm()
+    if request.method=='POST':
+        form = BlogPostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    return render(request, 'new_post.html', {'form': form})
 
 def detail(request, pk):
     # post = BlogPost.objects.get(pk=pk)

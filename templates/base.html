@@ -21,7 +21,11 @@
                 <a class="nav-link" href="{% url 'new_post' %}">Add New Post</a>
             </div>
         </div>
-        <div class="mx-1">Welcome</div>
+        {% if user.is_authenticated %}
+            <div class="mx-1">Welcome {{ user }} </div>
+        {% else %}
+            <div class="mx-1">Welcome </div>
+        {% endif %}
     </div>
 </nav>
 
