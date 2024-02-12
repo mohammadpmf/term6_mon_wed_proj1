@@ -26,3 +26,13 @@ def detail(request, pk):
         'post': post
     }
     return render(request, 'post_detail.html', context)
+
+def delete(request, pk):
+    post = get_object_or_404(BlogPost, pk=pk)
+    context = {
+        'post': post
+    }
+    if request.method=='POST':
+        post.delete()
+        return redirect('home')
+    return render(request, 'delete_post.html', context)
