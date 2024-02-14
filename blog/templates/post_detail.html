@@ -11,7 +11,7 @@
     </p>
     <p class="small text-muted">Writer: {{ post.author }}</p>
     <p class="small text-muted mt">Last modified on: {{ post.datetime_modified }}</p>
-    <a href="">Update {{ post.title }}</a>
+    <a href="{% url 'update' post.id %}">Update {{ post.title }}</a>
     <a href="{% url 'delete' post.id %}">Delete {{ post.title }}</a>
 </div>
 
