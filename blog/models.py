@@ -16,11 +16,13 @@ class BlogPost(models.Model):
     def __str__(self):
         return self.title
     
-class Comment:
-    # author_name        اختیاری
-    # email              اختیاری
-    # text               اجباری
-    # datetime_created   
-    # post                اجباری و مربوط به یک پست خاص
-    pass
+class Comment(models.Model):
+    author_name =models.CharField(max_length=100, blank=True)
+    email = models.EmailField(blank=True)
+    text = models.TextField()
+    datetime_created = models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey(to=BlogPost, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text
     

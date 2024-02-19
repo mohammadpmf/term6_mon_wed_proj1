@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import BlogPost, Comment
-from .forms import BlogPostForm, CommentForm
+from .forms import BlogPostForm
 
 def tag(request):
     if request.method=='POST':
@@ -45,20 +45,20 @@ def detail(request, pk):
     # post = BlogPost.objects.get(pk=pk)
     post = get_object_or_404(BlogPost, pk=pk)
     comments = Comment.objects.filter(post=post).order_by('-datetime_created')
-    form = CommentForm()
-    if request.method=='POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            new_comment = form.save(commit=False)
-            new_comment.post=post
-            new_comment.save()
-            form = CommentForm()
-
     context = {
         'post': post,
         'comments': comments,
-        'form': form,
     }
+    if request.method=='POST':
+        author_name = request.POST.get('author_name')
+        email = request.POST.get('email')
+        text = request.POST.get('text')
+        Comment.objects.create(
+            author_name=author_name,
+            email=email,
+            text=text,
+            post=post,
+        )
     return render(request, 'post_detail.html', context)
 
 def delete(request, pk):
