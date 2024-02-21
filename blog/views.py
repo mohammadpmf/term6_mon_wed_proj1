@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from .models import BlogPost, Comment
 from .forms import BlogPostForm, CommentForm
+from django.views import generic
 
 def tag(request):
     if request.method=='POST':
@@ -12,8 +14,6 @@ def tag(request):
         return render(request, 'posts_list.html', context)
     return render(request, 'search.html')
     
-
-
 def show_all_posts(request):
     posts = BlogPost.objects.filter(status="p").order_by("-datetime_modified")
     context = {
@@ -21,6 +21,14 @@ def show_all_posts(request):
     }
     return render(request, 'posts_list.html', context)
 
+class AllPosts(generic.ListView):
+    model = BlogPost
+    template_name = 'posts_list.html'
+    context_object_name = 'posts'
+
+    # def get_queryset(self):
+    #     return BlogPost.objects.filter(status="p").order_by("-datetime_modified")
+    
 def new_post(request):
     form = BlogPostForm()
     if request.method=='POST':
@@ -29,6 +37,13 @@ def new_post(request):
             form.save()
             return redirect('home')
     return render(request, 'new_post.html', {'form': form})
+
+class NewPost(generic.CreateView):
+    model = BlogPost
+    template_name = 'new_post.html'
+    form_class = BlogPostForm
+    success_url = reverse_lazy('home')
+    # fields = ['title', 'text', 'status', 'author']
 
 
 def update(request, pk):
@@ -41,10 +56,16 @@ def update(request, pk):
             return redirect('home')
     return render(request, 'update_post.html', {'form': form})
 
+class Update(generic.UpdateView):
+    model = BlogPost
+    template_name = 'update_post.html'
+    form_class = BlogPostForm
+
+
 def detail(request, pk):
     # post = BlogPost.objects.get(pk=pk)
     post = get_object_or_404(BlogPost, pk=pk)
-    comments = Comment.objects.filter(post=post).order_by('-datetime_created')
+    comments = Comment.objects.filter(post=post, status=True).order_by('-datetime_created')
     form = CommentForm()
     if request.method=='POST':
         form = CommentForm(request.POST)
