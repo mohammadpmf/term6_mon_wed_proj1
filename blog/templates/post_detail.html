@@ -19,10 +19,12 @@
     <h3>Comments:</h3>
     {% if comments %}
         {% for comment in comments %}
-        <h2> {{ comment.author_name }} </h2>
-        <p> {{ comment.text }} </p>
-        <h6> {{ comment.datetime_created }} </h6>
-        <hr>
+        {% if comment.status %}
+            <h2> {{ comment.author_name }} </h2>
+            <p> {{ comment.text }} </p>
+            <h6> {{ comment.datetime_created }} </h6>
+            <hr>
+        {% endif %}
         {% endfor %}
     {% else %}
         Comments will be shown here ...
